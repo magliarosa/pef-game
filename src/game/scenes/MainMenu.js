@@ -16,7 +16,7 @@ export class MainMenu extends Scene
 
         this.logo = this.add.image(512, 300, 'logo').setDepth(100);
 
-        this.add.text(512, 460, 'Main Menu', {
+        this.add.text(512, 460, 'Hej Patryk', {
             fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
             stroke: '#000000', strokeThickness: 8,
             align: 'center'
