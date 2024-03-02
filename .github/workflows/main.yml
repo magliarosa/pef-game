@@ -1,4 +1,4 @@
-name: Deploy to Azure Static Web Apps - test
+name: Deploy to Azure Static Web Apps
 
 on:
   push:
@@ -14,7 +14,8 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '14'  # Specify your Node.js version
+          node-version: '18' # Update to Node.js 18
+          cache: 'npm'
 
       - name: Install Dependencies
         run: npm install
