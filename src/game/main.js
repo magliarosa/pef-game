@@ -21,7 +21,14 @@ const config = {
         Game,
         GameOver,
         Level1
-    ]
+    ],
+    physics: {
+        default: 'arcade',
+        arcade: {
+            gravity: { y: 300 },
+            debug: false
+        }
+    }
 };
 
 const StartGame = (parent) => {
