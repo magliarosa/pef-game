@@ -63,6 +63,15 @@ function App ()
         }
     }
 
+    const resetGame = () => {
+        // Ensure we have access to the Phaser game instance
+        if (phaserRef.current && phaserRef.current.game) {
+          // Access the SceneManager to start the 'StartScene'
+          phaserRef.current.game.scene.start('StartScene');
+        }
+      };
+      
+
     // Event emitted from the PhaserGame component
     const currentScene = (scene) => {
         setCanMoveLogo(scene.scene.key !== 'MainMenu');
@@ -72,6 +81,9 @@ function App ()
         <div id="app">
             <PhaserGame ref={phaserRef} currentActiveScene={currentScene} />
             <div>
+                <div>
+                    <button className='button' onClick={resetGame}>Reset game</button>
+                </div>
                 <div>
                     <button className="button" onClick={changeScene}>Change Scene</button>
                 </div>
