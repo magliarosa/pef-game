@@ -14,6 +14,7 @@ export class Level1 extends Scene {
     }
 
     create() {
+        console.log('start level1');
         this.cameras.main.setBackgroundColor('rgba(0,0,0,0');
 
         this.add.image(512, 384, 'backgroundLv1').setAlpha(0.5);

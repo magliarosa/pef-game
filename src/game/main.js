@@ -22,9 +22,9 @@ const config = {
         MainMenu,
         Game,
         GameOver,
+        StartScene,
         Level1,
-        Level2,
-        StartScene
+        Level2
     ],
     physics: {
         default: 'arcade',

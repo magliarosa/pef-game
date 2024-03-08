@@ -3,11 +3,10 @@ import { useRef, useState } from 'react';
 import Phaser from 'phaser';
 import { PhaserGame } from './game/PhaserGame';
 
-function App ()
-{
+function App() {
     // The sprite can only be moved in the MainMenu Scene
     const [canMoveLogo, setCanMoveLogo] = useState(true);
-    
+
     //  References to the PhaserGame component (game and scene are exposed)
     const phaserRef = useRef();
     const [logoPosition, setLogoPosition] = useState({ x: 0, y: 0 });
@@ -16,8 +15,7 @@ function App ()
 
         const scene = phaserRef.current.scene;
 
-        if (scene)
-        {
+        if (scene) {
             scene.changeScene();
         }
     }
@@ -26,8 +24,7 @@ function App ()
 
         const scene = phaserRef.current.scene;
 
-        if (scene && scene.scene.key === 'MainMenu')
-        {
+        if (scene && scene.scene.key === 'MainMenu') {
             // Get the update logo position
             scene.moveLogo(({ x, y }) => {
 
@@ -41,8 +38,7 @@ function App ()
 
         const scene = phaserRef.current.scene;
 
-        if (scene)
-        {
+        if (scene) {
             // Add more stars
             const x = Phaser.Math.Between(64, scene.scale.width - 64);
             const y = Phaser.Math.Between(64, scene.scale.height - 64);
@@ -64,18 +60,38 @@ function App ()
     }
 
     const resetGame = () => {
-        // Ensure we have access to the Phaser game instance
         if (phaserRef.current && phaserRef.current.game) {
-          // Access the SceneManager to start the 'StartScene'
-          phaserRef.current.game.scene.start('StartScene');
+            var currentSceneKey = getCurrentSceneKey(phaserRef.current.game);
+            phaserRef.current.game.scene.stop(currentSceneKey);
+            phaserRef.current.game.scene.start('StartScene');
         }
-      };
-      
+    };
+
+    const setLevel = (levelNo) => {
+        if (phaserRef.current && phaserRef.current.game) {
+            var currentSceneKey = getCurrentSceneKey(phaserRef.current.game);
+            phaserRef.current.game.scene.stop(currentSceneKey);
+            phaserRef.current.game.scene.start('Level' + levelNo);
+        }
+    }
 
     // Event emitted from the PhaserGame component
     const currentScene = (scene) => {
         setCanMoveLogo(scene.scene.key !== 'MainMenu');
     }
+
+    const getCurrentSceneKey = (game) => {
+        let currentSceneKey = null;
+        const scenes = game.scene.scenes;
+        for (let scene of scenes) {
+            if (scene.sys.isActive()) {
+                currentSceneKey = scene.sys.settings.key;
+                break;
+            }
+        }
+        return currentSceneKey;
+    }
+    
 
     return (
         <div id="app">
@@ -83,6 +99,12 @@ function App ()
             <div>
                 <div>
                     <button className='button' onClick={resetGame}>Reset game</button>
+                </div>
+                <div>
+                    <button className='button' onClick={() => setLevel(1)}>Level 1</button>
+                </div>
+                <div>
+                    <button className='button' onClick={() => setLevel(2)}>Level 2</button>
                 </div>
                 <div>
                     <button className="button" onClick={changeScene}>Change Scene</button>
