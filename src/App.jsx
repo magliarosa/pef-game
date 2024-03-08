@@ -59,18 +59,23 @@ function App() {
         }
     }
 
-    const resetGame = () => {
+    const stopCurrentScene = () => {
         if (phaserRef.current && phaserRef.current.game) {
             var currentSceneKey = getCurrentSceneKey(phaserRef.current.game);
             phaserRef.current.game.scene.stop(currentSceneKey);
-            phaserRef.current.game.scene.start('StartScene');
         }
     };
 
+    const resetGame = () => {
+        if (phaserRef.current && phaserRef.current.game) {
+            stopCurrentScene();
+            phaserRef.current.game.scene.start('StartScene');
+        }
+    }
+
     const setLevel = (levelNo) => {
         if (phaserRef.current && phaserRef.current.game) {
-            var currentSceneKey = getCurrentSceneKey(phaserRef.current.game);
-            phaserRef.current.game.scene.stop(currentSceneKey);
+            stopCurrentScene();
             phaserRef.current.game.scene.start('Level' + levelNo);
         }
     }
@@ -91,7 +96,7 @@ function App() {
         }
         return currentSceneKey;
     }
-    
+
 
     return (
         <div id="app">
