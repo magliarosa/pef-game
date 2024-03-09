@@ -111,18 +111,6 @@ function App() {
                 <div>
                     <button className='button' onClick={() => setLevel(2)}>Level 2</button>
                 </div>
-                <div>
-                    <button className="button" onClick={changeScene}>Change Scene</button>
-                </div>
-                <div>
-                    <button disabled={canMoveLogo} className="button" onClick={moveSprite}>Toggle Movement</button>
-                </div>
-                <div className="spritePosition">Sprite Position:
-                    <pre>{`{\n  x: ${logoPosition.x}\n  y: ${logoPosition.y}\n}`}</pre>
-                </div>
-                <div>
-                    <button className="button" onClick={addSprite}>Add New Sprite</button>
-                </div>
             </div>
         </div>
     )
