@@ -41,7 +41,9 @@ export class Level1 extends Scene {
             console.log('star');
         }, null, this);
 
-        this.enemy = this.createEnemy();
+        this.enemy = this.physics.add.sprite(300, 300, 'enemyLv1').setScale(0.25);
+        this.enemy.setBounce(0.2);
+        this.enemy.setCollideWorldBounds(true);
         this.physics.add.collider(this.player, this.enemy, this.handlePlayerEnemyCollision, null, this);
         this.physics.add.collider(this.enemy, platforms);
 
@@ -53,13 +55,6 @@ export class Level1 extends Scene {
             yoyo: true, // make the tween reverse direction automatically
             repeat: -1, // repeat the tween indefinitely
         });
-
-        function createEnemy() {
-            const enemy = this.physics.add.sprite(300, 300, 'enemyLv1').setScale(0.25);
-            enemy.setBounce(0.2);
-            enemy.setCollideWorldBounds(true);
-            return enemy;
-        }
 
         EventBus.emit('current-scene-ready', this);
     }

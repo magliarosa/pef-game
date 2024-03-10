@@ -10,6 +10,7 @@ export class Level2 extends Scene {
         this.load.image('backgroundLv2', 'assets/level2/bg.png');
         this.load.image('platformLv2', 'assets/level2/platform.png');
         this.load.image('characterLv2', 'assets/level2/character.png');
+        this.load.image('enemyLv2', 'assets/level2/enemy.png');
         this.load.image('star', 'assets/star.png');
     }
 
@@ -23,24 +24,45 @@ export class Level2 extends Scene {
         platforms.create(250, 300, 'platformLv2').refreshBody();
         platforms.create(250, 700, 'platformLv2').refreshBody();
         platforms.create(800, 500, 'platformLv2').refreshBody();
-        
-        
+
+
         this.player = this.physics.add.sprite(100, 600, 'characterLv2');
         this.player.setBounce(0.2);
         this.player.setCollideWorldBounds(true);
         this.cursors = this.input.keyboard.createCursorKeys();
-        
+
         this.physics.add.collider(this.player, platforms);
         this.star = this.physics.add.sprite(900, 80, 'star');
         this.star.body.setAllowGravity(false);
-        
+
         this.physics.add.overlap(this.player, this.star, () => {
             this.star.disableBody(true, true);
             this.changeScene();
             console.log('star');
         }, null, this);
 
+        this.enemy = this.physics.add.sprite(220, 200, 'enemyLv2').setScale(0.25);
+        this.enemy.setBounce(0.2);
+        this.enemy.setCollideWorldBounds(true);
+        this.physics.add.collider(this.player, this.enemy, this.handlePlayerEnemyCollision, null, this);
+        this.physics.add.collider(this.enemy, platforms);
+
+        this.tweens.add({
+            targets: this.enemy,
+            x: '+=180', // move the enemy 200 pixels to the right
+            ease: 'Linear', // 'Linear' is the default easing function
+            duration: 800, // 2000ms = 2s
+            yoyo: true, // make the tween reverse direction automatically
+            repeat: -1, // repeat the tween indefinitely
+        });
+
         EventBus.emit('current-scene-ready', this);
+    }
+
+    handlePlayerEnemyCollision(player, enemy) {
+        // Handle collision here
+        console.log('Player and enemy have collided!');
+        this.scene.start('GameOver');
     }
 
     changeScene() {
