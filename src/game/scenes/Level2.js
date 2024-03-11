@@ -60,8 +60,6 @@ export class Level2 extends Scene {
     }
 
     handlePlayerEnemyCollision(player, enemy) {
-        // Handle collision here
-        console.log('Player and enemy have collided!');
         this.scene.start('GameOver');
     }
 
