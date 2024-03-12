@@ -12,6 +12,7 @@ export class Level1 extends Scene {
         this.load.image('characterLv1', 'assets/level1/character.png');
         this.load.image('enemyLv1', 'assets/level1/enemy.png');
         this.load.image('star', 'assets/star.png');
+        this.load.spritesheet('enemy', 'assets/level1/enemy_spritesheet.png', { frameWidth: 324, frameHeight: 452 });
     }
 
     create() {
@@ -41,9 +42,16 @@ export class Level1 extends Scene {
             console.log('star');
         }, null, this);
 
-        this.enemy = this.physics.add.sprite(300, 300, 'enemyLv1').setScale(0.25);
+        this.enemy = this.physics.add.sprite(300, 300, 'enemy').setScale(0.25);
         this.enemy.setBounce(0.2);
         this.enemy.setCollideWorldBounds(true);
+        this.enemy.anims.create({
+            key: 'enemy',
+            frames: this.anims.generateFrameNumbers('enemy', { start: 0, end: 23 }),
+            frameRate: 24,
+            repeat: -1
+        });
+        this.enemy.anims.play('enemy', true);
         this.physics.add.collider(this.player, this.enemy, this.handlePlayerEnemyCollision, null, this);
         this.physics.add.collider(this.enemy, platforms);
 
