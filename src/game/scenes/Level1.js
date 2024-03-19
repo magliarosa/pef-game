@@ -42,7 +42,13 @@ export class Level1 extends Scene {
             console.log('star');
         }, null, this);
 
-        this.enemy = this.physics.add.sprite(300, 300, 'enemy').setScale(0.25);
+        this.CreateEnemy1(platforms);
+
+        EventBus.emit('current-scene-ready', this);
+    }
+
+    CreateEnemy1(platforms) {
+        this.enemy = this.physics.add.sprite(300, 330, 'enemy').setScale(0.25);
         this.enemy.setBounce(0.2);
         this.enemy.setCollideWorldBounds(true);
         this.enemy.anims.create({
@@ -61,10 +67,8 @@ export class Level1 extends Scene {
             ease: 'Linear', // 'Linear' is the default easing function
             duration: 1000, // 2000ms = 2s
             yoyo: true, // make the tween reverse direction automatically
-            repeat: -1, // repeat the tween indefinitely
+            repeat: -1,
         });
-
-        EventBus.emit('current-scene-ready', this);
     }
 
     handlePlayerEnemyCollision(player, enemy) {

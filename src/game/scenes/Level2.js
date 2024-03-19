@@ -12,6 +12,7 @@ export class Level2 extends Scene {
         this.load.image('characterLv2', 'assets/level2/character.png');
         this.load.image('enemyLv2', 'assets/level2/enemy.png');
         this.load.image('star', 'assets/star.png');
+        this.load.spritesheet('enemy', 'assets/level2/enemy_spritesheet.png', { frameWidth: 324, frameHeight: 452 });
     }
 
     create() {
@@ -41,20 +42,7 @@ export class Level2 extends Scene {
             console.log('star');
         }, null, this);
 
-        this.enemy = this.physics.add.sprite(220, 200, 'enemyLv2').setScale(0.25);
-        this.enemy.setBounce(0.2);
-        this.enemy.setCollideWorldBounds(true);
-        this.physics.add.collider(this.player, this.enemy, this.handlePlayerEnemyCollision, null, this);
-        this.physics.add.collider(this.enemy, platforms);
-
-        this.tweens.add({
-            targets: this.enemy,
-            x: '+=180', // move the enemy 200 pixels to the right
-            ease: 'Linear', // 'Linear' is the default easing function
-            duration: 800, // 2000ms = 2s
-            yoyo: true, // make the tween reverse direction automatically
-            repeat: -1, // repeat the tween indefinitely
-        });
+        this.CreateEnemy1(platforms);
 
         EventBus.emit('current-scene-ready', this);
     }
@@ -79,5 +67,29 @@ export class Level2 extends Scene {
         if (this.cursors.up.isDown && this.player.body.touching.down) {
             this.player.setVelocityY(-900);
         }
+    }
+
+    CreateEnemy1(platforms) {
+        this.enemy = this.physics.add.sprite(220, 200, 'enemy').setScale(0.25);
+        this.enemy.setBounce(0.2);
+        this.enemy.setCollideWorldBounds(true);
+        this.enemy.anims.create({
+            key: 'enemy',
+            frames: this.anims.generateFrameNumbers('enemy', { start: 0, end: 23 }),
+            frameRate: 24,
+            repeat: -1
+        });
+        this.enemy.anims.play('enemy', true);
+        this.physics.add.collider(this.player, this.enemy, this.handlePlayerEnemyCollision, null, this);
+        this.physics.add.collider(this.enemy, platforms);
+
+        this.tweens.add({
+            targets: this.enemy,
+            x: '+=180', // move the enemy 200 pixels to the right
+            ease: 'Linear', // 'Linear' is the default easing function
+            duration: 800, // 2000ms = 2s
+            yoyo: true, // make the tween reverse direction automatically
+            repeat: -1, // repeat the tween indefinitely
+        });
     }
 }
