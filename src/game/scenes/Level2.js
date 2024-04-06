@@ -44,6 +44,8 @@ export class Level2 extends Scene {
 
         this.CreateEnemy1(platforms);
 
+        this.cameras.main.startFollow(this.player, true);
+
         EventBus.emit('current-scene-ready', this);
     }
 
