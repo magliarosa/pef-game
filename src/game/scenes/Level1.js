@@ -36,9 +36,10 @@ export class Level1 extends Scene {
         platforms.create(250, 400, 'platformLv1').refreshBody();
 
         this.player = this.physics.add.sprite(this.sys.game.config.width / 2, 600, 'characterLv1');
-        this.player.setBounce(0.2);
+        // this.player.setBounce(0.2);
         this.player.setCollideWorldBounds(true);
         this.cursors = this.input.keyboard.createCursorKeys();
+        this.cameras.main.startFollow(this.player, true);
 
         this.physics.add.collider(this.player, platforms);
         this.star = this.physics.add.sprite(150, 330, 'star');
@@ -66,7 +67,7 @@ export class Level1 extends Scene {
 
     CreateEnemy1(platforms) {
         this.enemy = this.physics.add.sprite(300, 330, 'enemy').setScale(0.25);
-        this.enemy.setBounce(0.2);
+        this.enemy.setBounce(0);
         this.enemy.setCollideWorldBounds(true);
         this.enemy.anims.create({
             key: 'enemy',
@@ -104,9 +105,23 @@ export class Level1 extends Scene {
         } else {
             this.player.setVelocityX(0);
         }
-
-        if (this.cursors.up.isDown && this.player.body.touching.down) {
+    
+        if (this.cursors.up.isDown && this.player.jumps < 1 && this.player.canJump) {
             this.player.setVelocityY(-900);
+            this.player.jumps++;
+            this.player.canJump = false;
+        }
+    
+        if (this.cursors.up.isUp) {
+            this.player.canJump = true;
+        }
+    
+        if (this.player.body.touching.down && !this.player.landing) {
+            this.player.landing = true;
+            setTimeout(() => {
+                this.player.jumps = 0;
+                this.player.landing = false;
+            }, 200); // delay in milliseconds
         }
 
         this.adjustDoorVolume(this.door1a, this.sound1a);
