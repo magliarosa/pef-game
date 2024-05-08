@@ -73,10 +73,10 @@ function App() {
         }
     }
 
-    const setLevel = (levelNo) => {
+    const setLevel = (levelName) => {
         if (phaserRef.current && phaserRef.current.game) {
             stopCurrentScene();
-            phaserRef.current.game.scene.start('Level' + levelNo);
+            phaserRef.current.game.scene.start(levelName);
         }
     }
 
@@ -106,10 +106,19 @@ function App() {
                     <button className='button' onClick={resetGame}>Reset game</button>
                 </div>
                 <div>
-                    <button className='button' onClick={() => setLevel(1)}>Level 1</button>
+                    <button className='button' onClick={() => setLevel('Lobby')}>Lobby</button>
                 </div>
                 <div>
-                    <button className='button' onClick={() => setLevel(2)}>Level 2</button>
+                    <button className='button' onClick={() => setLevel('Level1A')}>Level1A</button>
+                </div>
+                <div>
+                    <button className='button' onClick={() => setLevel('Level1B')}>Level1B</button>
+                </div>
+                <div>
+                    <button className='button' onClick={() => setLevel('Level2A')}>Level2A</button>
+                </div>
+                <div>
+                    <button className='button' onClick={() => setLevel('Level2B')}>Level2B</button>
                 </div>
             </div>
         </div>

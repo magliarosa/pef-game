@@ -1,9 +1,9 @@
 import { EventBus } from '../EventBus';
 import { Scene } from 'phaser';
 
-export class Level2 extends Scene {
+export class Level2B extends Scene {
     constructor() {
-        super('Level2');
+        super('Level2B');
     }
 
     preload() {
@@ -16,6 +16,9 @@ export class Level2 extends Scene {
     }
 
     create() {
+        //scene name
+        this.add.text(10, this.cameras.main.height - 30, 'Scene: Level2B', { fontSize: '20px', fill: '#FFFF00' });
+
         this.cameras.main.setBackgroundColor('rgba(0,0,0,0');
 
         this.add.image(512, 384, 'backgroundLv2').setAlpha(0.5);
@@ -54,7 +57,7 @@ export class Level2 extends Scene {
     }
 
     changeScene() {
-        this.scene.start('GameOver');
+        this.scene.start('Lobby');
     }
 
     update() {

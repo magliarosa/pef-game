@@ -37,6 +37,6 @@ export class StartScene extends Scene
 
     changeScene ()
     {
-        this.scene.start('Level1');
+        this.scene.start('Lobby');
     }
 }

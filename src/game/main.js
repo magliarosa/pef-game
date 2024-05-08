@@ -4,9 +4,12 @@ import { GameOver } from './scenes/GameOver';
 import { MainMenu } from './scenes/MainMenu';
 import Phaser from 'phaser';
 import { Preloader } from './scenes/Preloader';
-import { Level1 } from './scenes/Level1';
-import { Level2 } from './scenes/Level2';
+import { Level1A } from './scenes/Level1A';
 import { StartScene } from './scenes/StartScene';
+import { Lobby } from './scenes/Lobby';
+import { Level1B } from './scenes/Level1B';
+import { Level2A } from './scenes/Level2A';
+import { Level2B } from './scenes/Level2B';
 
 // Find out more information about the Game Config at:
 // https://newdocs.phaser.io/docs/3.70.0/Phaser.Types.Core.GameConfig
@@ -23,8 +26,11 @@ const config = {
         Game,
         GameOver,
         StartScene,
-        Level1,
-        Level2
+        Lobby,
+        Level1A,
+        Level1B,
+        Level2A,
+        Level2B
     ],
     physics: {
         default: 'arcade',
